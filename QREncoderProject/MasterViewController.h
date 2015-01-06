@@ -11,13 +11,20 @@
 @interface MasterViewController : UITableViewController <UITableViewDelegate, UITableViewDataSource,UISearchBarDelegate,UISearchDisplayDelegate>
 
 @property (strong,nonatomic) NSMutableArray *contactArray;
+
+//new
+@property (strong,nonatomic) NSMutableArray *designationArray;
+
+//name+designation
+@property (strong,nonatomic) NSArray *personContactArray;
+
 @property (strong,nonatomic) NSMutableArray *searchResults;
 
 @property (strong, nonatomic) UIWindow *window;
 -(IBAction)goBack;
 
-@property (strong, nonatomic) IBOutlet UITableView *myTableView;
-@property (strong, nonatomic) IBOutlet UISearchBar *mySearchBar;
+@property (weak, nonatomic) IBOutlet UITableView *myTableView;
+@property (weak, nonatomic) IBOutlet UISearchBar *mySearchBar;
 @property BOOL isFiltered;
 
 @end

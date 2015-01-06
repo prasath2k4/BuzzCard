@@ -10,29 +10,36 @@
 #import <MessageUI/MessageUI.h>
 
 @interface DetailViewController : UIViewController <MFMailComposeViewControllerDelegate>
+{
+    NSString *personFirstName;
+    NSString *personLastName;
+    UIAlertView *alertPopUp;
+}
 
 @property (strong, nonatomic) id detailItem;
 
-@property (strong, nonatomic) IBOutlet UILabel *detailDescriptionLabel;
-@property (strong, nonatomic) IBOutlet UILabel *personDesign;
-@property (strong, nonatomic) IBOutlet UILabel *personFullName;
-@property (strong, nonatomic) IBOutlet UILabel *personLastName;
-@property (strong, nonatomic) IBOutlet UILabel *personDOB;
-@property (strong, nonatomic) IBOutlet UIButton *personContactNum;
-@property (strong, nonatomic) IBOutlet UIButton *personFaxNum;
-@property (strong, nonatomic) IBOutlet UIButton *personEmailID;
-@property (strong, nonatomic) IBOutlet UILabel *personCompanyName;
-@property (strong, nonatomic) IBOutlet UIButton *personWebsite;
-@property (strong, nonatomic) IBOutlet UILabel *personAddress;
-@property (strong, nonatomic) IBOutlet UILabel *personCity;
-@property (strong, nonatomic) IBOutlet UILabel *personCountry;
-@property (strong, nonatomic) IBOutlet UILabel *personPostCode;
+@property (weak, nonatomic) IBOutlet UILabel *detailDescriptionLabel;
+@property (weak, nonatomic) IBOutlet UILabel *personDesign;
+@property (weak, nonatomic) IBOutlet UILabel *personFullName;
+@property (weak, nonatomic) IBOutlet UILabel *personDOB;
+@property (weak, nonatomic) IBOutlet UIButton *personContactNum;
+@property (weak, nonatomic) IBOutlet UIButton *personFaxNum;
+@property (weak, nonatomic) IBOutlet UIButton *personEmailID;
+@property (weak, nonatomic) IBOutlet UILabel *personCompanyName;
+@property (weak, nonatomic) IBOutlet UIButton *personWebsite;
+@property (weak, nonatomic) IBOutlet UILabel *personAddress;
+@property (weak, nonatomic) IBOutlet UILabel *personCity;
+@property (weak, nonatomic) IBOutlet UILabel *personCountry;
+@property (weak, nonatomic) IBOutlet UILabel *personPostCode;
+@property (weak, nonatomic) IBOutlet UIButton *saveContact;
 
-@property (strong, nonatomic) IBOutlet UIImageView *profilePic;
+
+@property (weak, nonatomic) IBOutlet UIImageView *profilePic;
 
 @property (strong, nonatomic) NSString *imageName;
 
 -(IBAction)makeCall;
 -(IBAction)sendEmail;
 -(IBAction)openWebpage;
+-(IBAction)saveContactToLocal;
 @end

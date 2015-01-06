@@ -7,11 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreLocation/CoreLocation.h>
 
-@interface AboutUsViewController : UIViewController
+@interface AboutUsViewController : UIViewController <CLLocationManagerDelegate>
+{
+    CLLocationManager *locationManager;
+    CLLocation *currentLocation;
+    NSString *latitude;
+    NSString *longitude;
+}
 
-@property (strong, nonatomic) IBOutlet UIButton *myBuzz;
-@property (strong, nonatomic) IBOutlet UIButton *buzzScan;
+@property (weak, nonatomic) IBOutlet UIButton *myBuzz;
+@property (weak, nonatomic) IBOutlet UIButton *buzzScan;
 
 -(IBAction) myBuzzCard;
 -(IBAction) buzzCardScan;

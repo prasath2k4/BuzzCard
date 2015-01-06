@@ -9,25 +9,29 @@
 #import <UIKit/UIKit.h>
 
 @interface GenerateViewController : UIViewController <UITextFieldDelegate>
+{
+    NSMutableArray *contactArray;
+    NSMutableArray *genConArray;
+}
 
 @property (strong, nonatomic) UIWindow *window;
 
-@property (strong, nonatomic) IBOutlet UITextField *personDesignation;
-@property (strong, nonatomic) IBOutlet UITextField *firstName;
-@property (strong, nonatomic) IBOutlet UITextField *lastName;
-@property (strong, nonatomic) IBOutlet UITextField *dateOfBirth;
-@property (strong, nonatomic) IBOutlet UITextField *contactNumber;
-@property (strong, nonatomic) IBOutlet UITextField *emailId;
-@property (strong, nonatomic) IBOutlet UITextField *companyName;
-@property (strong, nonatomic) IBOutlet UITextField *webUrl;
-@property (strong, nonatomic) IBOutlet UITextField *streetDetails;
-@property (strong, nonatomic) IBOutlet UITextField *cityName;
-@property (strong, nonatomic) IBOutlet UITextField *countryName;
-@property (strong, nonatomic) IBOutlet UITextField *postCode;
-@property (strong, nonatomic) IBOutlet UITextField *faxNumber;
+@property (weak, nonatomic) IBOutlet UITextField *personDesignation;
+@property (weak, nonatomic) IBOutlet UITextField *firstName;
+@property (weak, nonatomic) IBOutlet UITextField *lastName;
+@property (weak, nonatomic) IBOutlet UITextField *dateOfBirth;
+@property (weak, nonatomic) IBOutlet UITextField *contactNumber;
+@property (weak, nonatomic) IBOutlet UITextField *emailId;
+@property (weak, nonatomic) IBOutlet UITextField *companyName;
+@property (weak, nonatomic) IBOutlet UITextField *webUrl;
+@property (weak, nonatomic) IBOutlet UITextField *streetDetails;
+@property (weak, nonatomic) IBOutlet UITextField *cityName;
+@property (weak, nonatomic) IBOutlet UITextField *countryName;
+@property (weak, nonatomic) IBOutlet UITextField *postCode;
+@property (weak, nonatomic) IBOutlet UITextField *faxNumber;
 
-@property (strong, nonatomic) IBOutlet UIView *myView;
+@property (weak, nonatomic) IBOutlet UIView *myView;
 
--(IBAction) createQR;
+-(IBAction) createBuzzContact;
 
 @end

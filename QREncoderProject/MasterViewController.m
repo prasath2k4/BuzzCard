@@ -10,22 +10,33 @@
 
 #import "DetailViewController.h"
 
-#import "ContactDetailViewController.h"
+#import "NewContactViewController.h"
 
 @interface MasterViewController () {
     NSMutableArray *_objects;
     
     
         NSArray *convertedContactArray;
+        NSArray *convertedDesignationArray;
         NSArray *convertedSearchResults;
+        
     
     
 }
 @end
 
 @implementation MasterViewController
-@synthesize contactArray,searchResults,window;
+@synthesize contactArray,searchResults,window,designationArray,personContactArray;
 @synthesize mySearchBar,myTableView,isFiltered;
+
+-(void) viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:(BOOL) animated];
+
+    self.myTableView=nil;
+    self.mySearchBar=nil;
+}
+
 
 - (void)awakeFromNib
 {
@@ -65,8 +76,16 @@
     [self.searchResults removeAllObjects];
     NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"SELF contains[c] %@", searchText];
     
-    self.searchResults = [NSMutableArray arrayWithArray: [self.contactArray filteredArrayUsingPredicate:resultPredicate]];
-}
+  //  NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"cellName contains[cd] %@ AND title contains[cd] %@",searchText,searchText];
+
+    
+    
+    //self.searchResults = [NSMutableArray arrayWithArray: [self.contactArray filteredArrayUsingPredicate:resultPredicate]];
+    
+    //name+designation
+    self.searchResults = [NSMutableArray arrayWithArray: [self.personContactArray filteredArrayUsingPredicate:resultPredicate]];
+    
+    }
 
 -(BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
 {
@@ -87,45 +106,29 @@
 
 - (void)viewDidLoad
 {
+    
     [super viewDidLoad];
     
-    ContactDetailViewController *cd = [[ContactDetailViewController alloc] init];
+    NewContactViewController *cd = [[NewContactViewController alloc] init];
     [cd findContact];
     
     [[UIDevice currentDevice] setValue:
      [NSNumber numberWithInteger: UIInterfaceOrientationPortrait]
                                 forKey:@"orientation"];
     
-    
-    //
-    
-   // self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"retina_wood.png"]];
-    
-   // self.searchDisplayController.searchResultsDelegate = self;
-    
     contactArray = [[[NSUserDefaults standardUserDefaults] arrayForKey:@"ListOfContactArray"] mutableCopy];
-  //  NSLog(@"The contact array is %@",contactArray);
+    
+    //new
+    designationArray = [[[NSUserDefaults standardUserDefaults] arrayForKey:@"ListOfDesignArray"] mutableCopy];
+    
+    personContactArray = [[[NSUserDefaults standardUserDefaults] arrayForKey:@"PersonContactArray"] mutableCopy];
+    
+    //NSLog(@"the designation array is %@",designationArray);
     
     self.searchResults = [NSMutableArray arrayWithCapacity:[self.contactArray count]];
     
     convertedContactArray = [contactArray copy];
-   // NSLog(@"The converted contact array is %@",convertedContactArray);
-    
-    //// to conver
-    
-    NSMutableArray *sortArray = [convertedContactArray sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
-    
-    ////
-    
-    myTableView.backgroundView =
-    [[UIImageView alloc]initWithImage:
-     [[UIImage imageNamed:@"retina_wood.png"] stretchableImageWithLeftCapWidth:0.0
-                                                                 topCapHeight:5.0]];
-    self.myTableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"retina_wood.png"]];
-    
-       
-
-    
+    convertedDesignationArray = [designationArray copy];
 }
 
 - (void)didReceiveMemoryWarning
@@ -156,18 +159,18 @@
 {
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
         
-        NSArray *sourceArray;
+        // NSArray *sourceArray;
         NSIndexPath *indexPath = [self.searchDisplayController.searchResultsTableView indexPathForCell:(UITableViewCell *)sender];
         
         if (indexPath != nil)
         {
-            sourceArray = self.searchResults;
+          //  sourceArray = self.searchResults;
             
         }
         else
         {
-            indexPath = [self.tableView indexPathForCell:(UITableViewCell *)sender];
-            sourceArray = self.contactArray;
+           // indexPath = [self.tableView indexPathForCell:(UITableViewCell *)sender];
+           // sourceArray = self.contactArray;
            
         }
        // [sourceArray release];
@@ -190,41 +193,112 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    
-    cell.backgroundView = [[UIImageView alloc] initWithImage:[ [UIImage imageNamed:@"retina_wood.png"] stretchableImageWithLeftCapWidth:0.0 topCapHeight:5.0] ];
-    cell.selectedBackgroundView =  [[UIImageView alloc] initWithImage:[ [UIImage imageNamed:@"retina_wood.png"] stretchableImageWithLeftCapWidth:0.0 topCapHeight:5.0] ];
-    
-    
     
     if (cell == nil)
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        //cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+
     }
     
     if (tableView == self.searchDisplayController.searchResultsTableView)
     {
-        cell.textLabel.text = [self.searchResults objectAtIndex:indexPath.row];
+        //cell.textLabel.numberOfLines=0;
+        //cell.textLabel.text = [self.searchResults objectAtIndex:indexPath.row];
+        //cell.detailTextLabel.text = self.designationArray[indexPath.row];
+        //cell.detailTextLabel.text = @"";
+        // [cell.detailTextLabel setHidden:YES];
+        
+        ///
+        
+        NSString *selCell = [self.searchResults objectAtIndex:indexPath.row];
+
+        NSArray *testArray = [[NSArray alloc] init];
+        
+        testArray = [selCell componentsSeparatedByString:@"\r"];
+        
+        NSString *text1 = [testArray objectAtIndex:0];
+        NSString *text2 = [testArray objectAtIndex:1];
+        NSString *text3 = [testArray objectAtIndex:2];
+        
+        cell.textLabel.numberOfLines=0;
+        cell.textLabel.text = [NSString stringWithFormat:@"%@\n%@",text1,text2];
+        cell.detailTextLabel.text=text3;
+        [cell.detailTextLabel setHidden:YES];
+        
+        
+        ///
+
+
     }
     else
     {
-        cell.textLabel.text = self.contactArray[indexPath.row];
+       // cell.textLabel.text = self.contactArray[indexPath.row];
+       // cell.detailTextLabel.text = self.designationArray[indexPath.row];
+       
+        
+        
+        NSString *testText = self.personContactArray[indexPath.row];
+
+        
+        NSArray *testArray = [[NSArray alloc] init];
+        
+        testArray = [testText componentsSeparatedByString:@"\r"];
+        
+        NSString *text1 = [testArray objectAtIndex:0];
+        NSString *text2 = [testArray objectAtIndex:1];
+        NSString *text3 = [testArray objectAtIndex:2];
+                
+     //   NSLog(@"the final text is %@",finalText);
+        cell.textLabel.numberOfLines=0;
+        cell.textLabel.text = [NSString stringWithFormat:@"%@\n%@",text1,text2];
+        cell.detailTextLabel.text=text3;
+        [cell.detailTextLabel setHidden:YES];
+         
+    
+        
+      //  cell.textLabel.numberOfLines=0;
+      //  cell.textLabel.text = self.personContactArray[indexPath.row];
+       // cell.detailTextLabel.text = self.designationArray[indexPath.row];
+        
     }
     
     return cell;
+
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    
     NSString *cellLabelText = cell.textLabel.text;
-    //NSLog(@"The selected contact is %@",cellLabelText);
+    
+    /*
+    
+    NSArray *sepArray = [[NSArray alloc] init];
+    
+    sepArray = [cellLabelText componentsSeparatedByString:@"\t"];
+    
+    NSString *num = [sepArray objectAtIndex:2];
+    
+    NSArray *sepNum = [[NSArray alloc] init];
+    
+    sepNum = [num componentsSeparatedByString:@"\r"];
+    
+    NSString *finalNum = [sepNum objectAtIndex:1];
+    
+     */
+    
+    NSLog(@"The selected contact is %@",cell.detailTextLabel.text);
     
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     
     // saving an NSString
-    [prefs setObject:cellLabelText forKey:@"SelectedContact"];
+    [prefs setObject:cell.detailTextLabel.text forKey:@"SelectedContact"];
     
     [myTableView deselectRowAtIndexPath:indexPath animated:YES];
 }

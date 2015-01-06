@@ -8,13 +8,9 @@
 
 #import "AppDelegate.h"
 
-#import "CreatedQRViewController.h"
 #import "AboutUsViewController.h"
 
 #import "Reachability.h"
-
-#import <Parse/Parse.h>
-
 
 @implementation AppDelegate
 
@@ -32,11 +28,6 @@
     [self.window makeKeyAndVisible];
      */
     
-    [Parse setApplicationId:@"wBZWVtNJeu2MhhNlJuW4eEhyy9uV9M62h8wxRnay"
-                  clientKey:@"oiaZSC0VG9MTqMcr9iQjcT7ivDi6eInkyTSfVGZ2"];
-    
-    [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
-
     
     
     {
@@ -62,6 +53,15 @@
      UIViewController *mainViewController = [mainstoryBoard instantiateInitialViewController];
      self.window.rootViewController = mainViewController;
      [self.window makeKeyAndVisible];
+            
+            //n/w status check
+            
+            NSUserDefaults *nwStat = [NSUserDefaults standardUserDefaults];
+            
+            [nwStat setBool:YES forKey:@"NetworkStatus"];
+
+            
+            //
      
      
      return YES;

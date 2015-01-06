@@ -7,14 +7,15 @@
 //
 
 #import "DetailViewController.h"
-#import "ContactDetailViewController.h"
+#import "NewContactViewController.h"
+
 @interface DetailViewController ()
 - (void)configureView;
 @end
 
 @implementation DetailViewController
 
-@synthesize profilePic,imageName,detailDescriptionLabel,personAddress,personContactNum,personCity,personFullName,personCompanyName,personCountry,personDOB,personEmailID,personLastName,personPostCode,personDesign,personWebsite;
+@synthesize profilePic,imageName,detailDescriptionLabel,personAddress,personContactNum,personCity,personFullName,personCompanyName,personCountry,personDOB,personEmailID,personPostCode,personDesign,personWebsite,personFaxNum;
 
 #pragma mark - Managing the detail item
 
@@ -31,7 +32,24 @@
 
 //
 
+-(void) viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:(BOOL) animated];
 
+    self.detailDescriptionLabel=nil;
+    self.personDesign = nil;
+    self.personFullName = nil;
+    self.personDOB = nil;
+    self.personContactNum = nil;
+    self.personFaxNum = nil;
+    self.personEmailID = nil;
+    self.personCompanyName = nil;
+    self.personWebsite= nil;
+    self.personAddress = nil;
+    self.personCity=nil;
+    self.personCountry=nil;
+    self.personPostCode=nil;
+}
 
 //
 
@@ -51,6 +69,24 @@
     [[UIDevice currentDevice] setValue:
      [NSNumber numberWithInteger: UIInterfaceOrientationLandscapeLeft]
                                 forKey:@"orientation"];
+    ///
+    
+   // NSArray *personName = [[NSArray alloc] init];
+    NSArray *personName;
+    personName = [self.personFullName.text componentsSeparatedByString:@" "];
+    personFirstName = [personName objectAtIndex:0];
+    personLastName = [personName objectAtIndex:1];
+    
+    NSArray *editContactData = [[NSArray alloc] initWithObjects:personFirstName,personLastName,self.personDesign.text,@"nodate",self.personContactNum.currentTitle,self.personFaxNum.currentTitle,self.personEmailID.currentTitle,self.personCompanyName.text,self.personWebsite.currentTitle,self.personAddress.text,self.personCity.text,self.personCountry.text,self.personPostCode.text,nil];
+    
+    
+    NSString *finalEditContactData = [editContactData componentsJoinedByString:@"|"];
+    NSUserDefaults *editPrefs = [NSUserDefaults standardUserDefaults];
+    [editPrefs setObject:finalEditContactData forKey:@"newContact"];
+    
+    ///
+
+
 }
 
 - (void)viewDidLoad
@@ -60,26 +96,6 @@
                                 forKey:@"orientation"];
     
     
-    /*
-    [detailDescriptionLabel sizeToFit];
-    [personAddress sizeToFit];
-    [persontitle sizeToFit];
-    [personFirstName sizeToFit];
-    [personLastName sizeToFit];
-    [personDOB sizeToFit];
-    [personAddress sizeToFit];
-    [personCity sizeToFit];
-    [personCountry sizeToFit];
-    [personPostCode sizeToFit];
-     */
-    
-    self.profilePic.layer.borderWidth = 3.0f;
-    
-    self.profilePic.layer.borderColor = [UIColor clearColor].CGColor;
-    
-    self.profilePic.layer.cornerRadius = self.profilePic.frame.size.width / 2;
-    self.profilePic.clipsToBounds = YES;
-    
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     [self configureView];
@@ -87,7 +103,7 @@
    // self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"retina_wood.png"]];
     
     
-    ContactDetailViewController *cdv = [[ContactDetailViewController alloc] init];
+    NewContactViewController *cdv = [[NewContactViewController alloc] init];
     [cdv getContactDetails];
     
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
@@ -95,9 +111,14 @@
     // getting an NSString
     NSString *selCont = [prefs stringForKey:@"ContactToBeSent"];
    // NSLog(@"The selected contact is %@",selCont);
+   
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH,0);
+    
+    dispatch_async(queue, ^{
     
     NSArray *finalContact = [selCont componentsSeparatedByString:@"&&"];
    
+        dispatch_sync(dispatch_get_main_queue(), ^{
    
     self.personDesign.text=finalContact[0];
     self.personDesign.adjustsFontSizeToFitWidth = YES;
@@ -108,14 +129,10 @@
     self.personFullName.adjustsFontSizeToFitWidth = YES;
     //[self.personFirstName adjustsFontSizeToFitWidth];
     //[self.personFirstName sizeToFit];
+            
+            
+            
     
-    self.personLastName.text=finalContact[2];
-    self.personLastName.adjustsFontSizeToFitWidth = YES;
-    //[self.personLastName adjustsFontSizeToFitWidth];
-   // [self.personLastName sizeToFit];
-    
-   // NSString *fullName1 = [finalContact[1] stringByAppendingString:@" "];
-   // NSString *fullName2 = [fullName1 stringByAppendingString:finalContact[2]];
     
     self.personFullName.text = finalContact[1];
     
@@ -149,6 +166,23 @@
     
     NSData* imageData = [[NSUserDefaults standardUserDefaults] objectForKey:imageName];
     self.profilePic.image = [UIImage imageWithData:imageData];
+        });
+    });
+    
+    /*
+    NSArray *personName = [[NSArray alloc] init];
+    personName = [self.personFullName.text componentsSeparatedByString:@" "];
+    personFirstName = [personName objectAtIndex:0];
+    personLastName = [personName objectAtIndex:1];
+    
+    NSArray *editContactData = [[NSArray alloc] initWithObjects:personFirstName,personLastName,self.personDesign.text,@"",self.personContactNum.currentTitle,self.personFaxNum.currentTitle,self.personEmailID.currentTitle,self.personCompanyName.text,self.personWebsite.currentTitle,self.personAddress.text,self.personCity.text,self.personCountry.text,self.personPostCode.text,nil];
+    
+    
+    NSString *finalEditContactData = [editContactData componentsJoinedByString:@"|"];
+    NSUserDefaults *editPrefs = [NSUserDefaults standardUserDefaults];
+    [editPrefs setObject:finalEditContactData forKey:@"newContact"];
+
+    */
     
 }
 
@@ -208,7 +242,241 @@
     // Close the Mail Interface
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
-     
+
+-(void)saveContactToLocal
+{
+    
+    alertPopUp = [[UIAlertView alloc] initWithTitle:@"Alert"
+                               
+                                                         message:@"Do you want to save the contact to phone?"
+                               
+                                                        delegate:self cancelButtonTitle:@"Yes"
+                               
+                                               otherButtonTitles:@"No", nil];
+    
+    [alertPopUp show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    
+    if (buttonIndex == 0)
+        
+    {
+        
+        [self contactSync];
+    }
+    
+    if (buttonIndex == 1)
+        
+    {
+        alertPopUp=nil;
+    }
+    
+}
+
+
+-(void) contactSync
+{
+
+    CFErrorRef error = nil;
+    
+    
+    
+    //creating address book
+    
+    ABAddressBookRef iPhoneAdrsBookRef = ABAddressBookCreateWithOptions(Nil,Nil);
+    
+    
+    
+    __block BOOL accessGranted = NO;
+    
+    
+    
+    //checking for access
+    
+    if (ABAddressBookRequestAccessWithCompletion != NULL) { // we're on iOS 6
+        
+        dispatch_semaphore_t sema = dispatch_semaphore_create(0);
+        
+        ABAddressBookRequestAccessWithCompletion(iPhoneAdrsBookRef, ^(bool granted, CFErrorRef error) {
+            
+            accessGranted = granted;
+            
+            dispatch_semaphore_signal(sema);
+            
+        });
+        
+        dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
+        
+        //  dispatch_release(sema);
+        
+    }
+    
+    else { // we're on iOS 5 or older
+        
+        accessGranted = YES;
+        
+    }
+    
+    
+    
+    if(accessGranted)
+        
+    {
+        
+        ABRecordRef newPerson = ABPersonCreate();
+        
+        
+        
+        //firstname
+        
+        ABRecordSetValue(newPerson, kABPersonFirstNameProperty,CFBridgingRetain(personFirstName), &error);
+        
+        
+        
+        //lastname
+        
+        ABRecordSetValue(newPerson, kABPersonLastNameProperty,CFBridgingRetain(personLastName), &error);
+        
+        
+        
+        //company name
+        
+        ABRecordSetValue(newPerson, kABPersonOrganizationProperty,CFBridgingRetain(personCompanyName.text), &error);
+        
+        
+        
+        //designation
+        
+        ABRecordSetValue(newPerson, kABPersonJobTitleProperty,CFBridgingRetain(personDesign.text), &error);
+        
+        
+        //phone num and fax number
+        
+        ABMutableMultiValueRef multiPhone = ABMultiValueCreateMutable(kABMultiStringPropertyType);
+        
+        ABMultiValueAddValueAndLabel(multiPhone, CFBridgingRetain(personContactNum.currentTitle), kABPersonPhoneMobileLabel, NULL);
+        
+        ABMultiValueAddValueAndLabel(multiPhone,CFBridgingRetain(personFaxNum.currentTitle), kABOtherLabel, NULL);
+        
+        ABRecordSetValue(newPerson, kABPersonPhoneProperty, multiPhone,nil);
+        
+        // release phone object
+        
+        CFRelease(multiPhone);
+        
+        
+        
+        //Adding email details
+        
+        ABMutableMultiValueRef multiEmail = ABMultiValueCreateMutable(kABMultiStringPropertyType);
+        
+        // set the work mail
+        
+        ABMultiValueAddValueAndLabel(multiEmail,CFBridgingRetain(personEmailID.currentTitle), kABWorkLabel, NULL);
+        
+        // add the mail to person
+        
+        ABRecordSetValue(newPerson, kABPersonEmailProperty, multiEmail, &error);
+        
+        // release mail object
+        
+        CFRelease(multiEmail);
+        
+        
+        
+        //add website
+        
+        ABMutableMultiValueRef urlMultiValue =
+        
+        ABMultiValueCreateMutable(kABStringPropertyType);
+        
+        ABMultiValueAddValueAndLabel(urlMultiValue, CFBridgingRetain(personWebsite.currentTitle),
+                                     
+                                     kABPersonHomePageLabel, NULL);
+        
+        ABRecordSetValue(newPerson, kABPersonURLProperty, urlMultiValue, &error);
+        
+        CFRelease(urlMultiValue);
+        
+        
+        
+        //// adding address details
+        
+        // create address object
+        
+        ABMutableMultiValueRef multiAddress = ABMultiValueCreateMutable(kABMultiDictionaryPropertyType);
+        
+        // create a new dictionary
+        
+        NSMutableDictionary *addressDictionary = [[NSMutableDictionary alloc] init];
+        
+        // set the address line to new dictionary object
+        
+        [addressDictionary setObject:personAddress.text forKey:(NSString *) kABPersonAddressStreetKey];
+        
+        // set the city to new dictionary object
+        
+        [addressDictionary setObject:personCity.text forKey:(NSString *)kABPersonAddressCityKey];
+        
+        // set the country to new dictionary object
+        
+        [addressDictionary setObject:personCountry.text forKey:(NSString *)kABPersonAddressCountryKey];
+        
+        // set the zip/pin to new dictionary object
+        
+        [addressDictionary setObject:personPostCode.text forKey:(NSString *)kABPersonAddressZIPKey];
+        
+        // retain the dictionary
+        
+        CFTypeRef ctr = CFBridgingRetain(addressDictionary);
+        
+        // copy all key-values from ctr to Address object
+        
+        ABMultiValueAddValueAndLabel(multiAddress,ctr, kABWorkLabel, NULL);
+        
+        // add address object to person
+        
+        ABRecordSetValue(newPerson, kABPersonAddressProperty, multiAddress,&error);
+        
+        // release address object
+        
+        CFRelease(multiAddress);
+        
+        
+        
+        ABAddressBookAddRecord(iPhoneAdrsBookRef, newPerson, &error);
+        
+        // save/commit entry
+        
+        ABAddressBookSave(iPhoneAdrsBookRef, &error);
+        
+        
+        CFRelease(newPerson);
+        
+        if (error != NULL) {
+            
+            NSLog(@"error is %@",error);
+            
+            
+        }
+        
+        else{
+            UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@""
+                                                                  message:@"Contact saved to phone"
+                                                                 delegate:nil
+                                                        cancelButtonTitle:@"OK"
+                                                        otherButtonTitles: nil];
+            
+            [myAlertView show];
+        }
+        
+    }
+    
+
+}
+
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

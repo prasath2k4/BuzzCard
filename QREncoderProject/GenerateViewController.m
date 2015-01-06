@@ -8,9 +8,7 @@
 
 #import "GenerateViewController.h"
 
-#import "CreatedQRViewController.h"
-
-#import "MyQRViewController.h"
+#import "AboutUsViewController.h"
 
 @interface GenerateViewController ()
 
@@ -31,7 +29,14 @@
     return self;
 }
 
+-(void) viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:(BOOL) animated];
+    
+    
 
+    
+}
 
 -(BOOL)isABackSpace:(NSString*)string {
     NSString* check =@"Check";
@@ -42,16 +47,56 @@
     return NO;
 }
 
-
--(void) createQR
+-(void) viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
+    genConArray = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"GenCon"]];
+    
+    if(![genConArray count] == 0)
+    {
         
+        firstName.text=genConArray[0];
+        lastName.text=genConArray[1];
+        personDesignation.text=genConArray[2];
+        contactNumber.text=genConArray[4];
+        faxNumber.text=genConArray[5];
+        emailId.text=genConArray[6];
+        companyName.text=genConArray[7];
+        webUrl.text=genConArray[8];
+        streetDetails.text=genConArray[9];
+        cityName.text=genConArray[10];
+        countryName.text=genConArray[11];
+        postCode.text=genConArray[12];
+    }
+    else{
+        
+        firstName.text=@"";
+        lastName.text=@"";
+        personDesignation.text=@"";
+        contactNumber.text=@"";
+        faxNumber.text=@"";
+        emailId.text=@"";
+        companyName.text=@"";
+        webUrl.text=@"";
+        streetDetails.text=@"";
+        cityName.text=@"";
+        countryName.text=@"";
+        postCode.text=@"";
+        
+    }
+}
+
+
+-(void) createBuzzContact
+{
+    /*
     if(![webUrl.text hasPrefix:@"www."])
     {
         NSString *url = @"www.";
         NSString *finalUrl = [url stringByAppendingString:webUrl.text];
         webUrl.text = finalUrl;
     }
+     */
     
     /////
     
@@ -59,8 +104,11 @@
     
     /////
     
-    NSArray *contactArray = [[NSArray alloc] initWithObjects: firstName.text,lastName.text,personDesignation.text,dateOfBirth.text,contactNumber.text,faxNumber.text,emailId.text,companyName.text,webUrl.text,streetDetails.text,cityName.text,countryName.text,postCode.text, nil];
+    contactArray = [[NSMutableArray alloc] initWithObjects: firstName.text,lastName.text,personDesignation.text,@"nodate",contactNumber.text,faxNumber.text,emailId.text,companyName.text,webUrl.text,streetDetails.text,cityName.text,countryName.text,postCode.text, nil];
     NSString *finalContact = [contactArray componentsJoinedByString:@"|"];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:contactArray forKey:@"GenCon"];
+
     
     
     /////
@@ -74,12 +122,12 @@
     
     ////
     
-    CreatedQRViewController *createQR = [[CreatedQRViewController alloc] initWithNibName:@"CreatedQRViewController" bundle:nil];
-    createQR.contact = finalContact;
+   // CreatedQRViewController *createQR = [[CreatedQRViewController alloc] initWithNibName:@"CreatedQRViewController" bundle:nil];
+   // createQR.contact = finalContact;
     
-    UIImage *image1 = [createQR quickResponseImageForString:finalContact withDimension:182];
+   // UIImage *image1 = [createQR quickResponseImageForString:finalContact withDimension:182];
     
-    [[NSUserDefaults standardUserDefaults] setObject:UIImagePNGRepresentation(image1) forKey:@"MyQR1"];
+  //  [[NSUserDefaults standardUserDefaults] setObject:UIImagePNGRepresentation(image1) forKey:@"MyQR1"];
     
     //[self presentViewController:createQR animated:YES completion:nil];
     
@@ -91,15 +139,27 @@
     
     /////
     
-    MyQRViewController *myQR = [self.storyboard instantiateViewControllerWithIdentifier:@"MyQRView"];
+    UIAlertView *alertPopUp = [[UIAlertView alloc] initWithTitle:@"Alert"
+                               
+                                                         message:@"Your contact is created"
+                               
+                                                        delegate:self cancelButtonTitle:@"OK"
+                               
+                                               otherButtonTitles:nil];
     
-    [self presentViewController:myQR animated:YES completion:nil];
+    [alertPopUp show];
+
+    
+    //AboutUsViewController *about = [self.storyboard instantiateViewControllerWithIdentifier:@"AboutUs"];
+    
+    //[self presentViewController:about animated:YES completion:nil];
     
     }
 
 - (void)viewDidLoad
 {
     
+    [self.view endEditing:YES];
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
@@ -109,12 +169,13 @@
      [NSNumber numberWithInteger: UIInterfaceOrientationPortrait]
                                 forKey:@"orientation"];
     
+    self.myView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"slate.PNG"]];
+    
     //
     
     personDesignation.delegate=self;
     firstName.delegate=self;
     lastName.delegate=self;
-    dateOfBirth.delegate=self;
     contactNumber.delegate=self;
     emailId.delegate=self;
     companyName.delegate=self;
@@ -126,28 +187,7 @@
     faxNumber.delegate=self;
     
     
-    UIDatePicker *datePicker = [[UIDatePicker alloc]init];
     
-    [datePicker setDatePickerMode:UIDatePickerModeDate];
-    datePicker.backgroundColor = [UIColor whiteColor];
-    [datePicker addTarget:self action:@selector(updateTextField:) forControlEvents:UIControlEventValueChanged];
-    [dateOfBirth setInputView:datePicker];
-    
-}
-
--(void)updateTextField:(id)sender
-{
-    if([dateOfBirth isFirstResponder]){
-        UIDatePicker *picker = (UIDatePicker*)dateOfBirth.inputView;
-        
-        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-        [dateFormat setDateFormat:@"dd-MM-yyyy"];
-        NSString *date = [dateFormat stringFromDate:picker.date];
-    
-        //NSLog(@"date is >>> , %@",date);
-        dateOfBirth.text = date;
-        //dateOfBirth.text = [NSString stringWithFormat:@"%@",picker.date];
-    }
 }
 
 -(void) viewDidAppear:(BOOL)animated
@@ -156,6 +196,7 @@
     [[UIDevice currentDevice] setValue:
      [NSNumber numberWithInteger: UIInterfaceOrientationPortrait]
                                 forKey:@"orientation"];
+    
 }
 
 
@@ -164,7 +205,6 @@
     [personDesignation resignFirstResponder];
     [firstName resignFirstResponder];
     [lastName resignFirstResponder];
-    [dateOfBirth resignFirstResponder];
     [contactNumber resignFirstResponder];
     [emailId resignFirstResponder];
     [companyName resignFirstResponder];
@@ -175,6 +215,7 @@
     [postCode resignFirstResponder];
     [faxNumber resignFirstResponder];
 
+    
     return  YES;
 
 }
@@ -183,8 +224,6 @@
 {
     [self animateTextField: textField up: YES];
 }
-
-
 
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
