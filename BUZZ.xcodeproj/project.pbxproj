@@ -27,6 +27,18 @@
 		3FA05F3419A7D13400B2F780 /* 29.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FA05F3119A7D13400B2F780 /* 29.png */; };
 		3FA05F3519A7D13400B2F780 /* 40.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FA05F3219A7D13400B2F780 /* 40.png */; };
 		3FA05F3619A7D13400B2F780 /* 60.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FA05F3319A7D13400B2F780 /* 60.png */; };
+<<<<<<< HEAD
+=======
+		3FB2C57219A78275003AD0A3 /* Xcode.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FB2C57119A78275003AD0A3 /* Xcode.png */; };
+		3FB2C57419A7833E003AD0A3 /* web.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FB2C57319A7833E003AD0A3 /* web.png */; };
+		3FB2C57719A783B8003AD0A3 /* call.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FB2C57519A783B8003AD0A3 /* call.png */; };
+		3FB2C57819A783B8003AD0A3 /* email.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FB2C57619A783B8003AD0A3 /* email.png */; };
+		3FB2C57A19A78461003AD0A3 /* bday.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FB2C57919A78461003AD0A3 /* bday.png */; };
+		3FB2C57C19A78552003AD0A3 /* AddressIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FB2C57B19A78552003AD0A3 /* AddressIcon.png */; };
+		3FB2C57E19A78668003AD0A3 /* Company.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FB2C57D19A78668003AD0A3 /* Company.png */; };
+		3FD0F7A119C52FE7008E4DC4 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FD0F7A019C52FE7008E4DC4 /* Parse.framework */; };
+		3FD0F7A319C52FF4008E4DC4 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FD0F7A219C52FF4008E4DC4 /* Bolts.framework */; };
+>>>>>>> FETCH_HEAD
 		3FD0F7A519C5322C008E4DC4 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FD0F7A419C5322C008E4DC4 /* SystemConfiguration.framework */; };
 		3FD0F7A719C53233008E4DC4 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FD0F7A619C53233008E4DC4 /* StoreKit.framework */; };
 		3FD0F7A919C53243008E4DC4 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FD0F7A819C53243008E4DC4 /* Security.framework */; };
@@ -80,6 +92,20 @@
 		3FA05F3119A7D13400B2F780 /* 29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 29.png; sourceTree = "<group>"; };
 		3FA05F3219A7D13400B2F780 /* 40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 40.png; sourceTree = "<group>"; };
 		3FA05F3319A7D13400B2F780 /* 60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 60.png; sourceTree = "<group>"; };
+<<<<<<< HEAD
+=======
+		3FB2C57119A78275003AD0A3 /* Xcode.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Xcode.png; sourceTree = "<group>"; };
+		3FB2C57319A7833E003AD0A3 /* web.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = web.png; sourceTree = "<group>"; };
+		3FB2C57519A783B8003AD0A3 /* call.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = call.png; sourceTree = "<group>"; };
+		3FB2C57619A783B8003AD0A3 /* email.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = email.png; sourceTree = "<group>"; };
+		3FB2C57919A78461003AD0A3 /* bday.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bday.png; sourceTree = "<group>"; };
+		3FB2C57B19A78552003AD0A3 /* AddressIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AddressIcon.png; sourceTree = "<group>"; };
+		3FB2C57D19A78668003AD0A3 /* Company.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Company.png; sourceTree = "<group>"; };
+		3FD0F79C19C52FC2008E4DC4 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
+		3FD0F79D19C52FC2008E4DC4 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
+		3FD0F7A019C52FE7008E4DC4 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = "../../Downloads/parse-library-1.3.0/Parse.framework"; sourceTree = "<group>"; };
+		3FD0F7A219C52FF4008E4DC4 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = "../../Downloads/parse-library-1.3.0/Bolts.framework"; sourceTree = "<group>"; };
+>>>>>>> FETCH_HEAD
 		3FD0F7A419C5322C008E4DC4 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		3FD0F7A619C53233008E4DC4 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		3FD0F7A819C53243008E4DC4 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -201,7 +227,31 @@
 				3FD0F7B419C5929C008E4DC4 /* Launch Screen.xib */,
 				3F33A9AF19BC10C9003C6756 /* Reachability.m */,
 				3F33A9B019BC10C9003C6756 /* Reachability.h */,
+<<<<<<< HEAD
 				3F22F3201A0358D5008B99C7 /* Images */,
+=======
+				3FDF3FF419B8E056004D0B74 /* default_person.png */,
+				3FDF3FF019B8D9BC004D0B74 /* contact.png */,
+				3FDF3FEE19B8D654004D0B74 /* qr.png */,
+				3FDF3FEC19B8D5D6004D0B74 /* about.png */,
+				3FDF3FE819B8C24C004D0B74 /* BUZZ.png */,
+				3FD1D6ED19A8B5B600701510 /* info_48*32.png */,
+				3FD1D6EB19A8B4B900701510 /* info.png */,
+				3FD1D6E919A8A96100701510 /* retina_wood.png */,
+				3FA05F3119A7D13400B2F780 /* 29.png */,
+				3FA05F3219A7D13400B2F780 /* 40.png */,
+				3FA05F3319A7D13400B2F780 /* 60.png */,
+				3FB2C57D19A78668003AD0A3 /* Company.png */,
+				3FB2C57B19A78552003AD0A3 /* AddressIcon.png */,
+				3FB2C57919A78461003AD0A3 /* bday.png */,
+				3FB2C57519A783B8003AD0A3 /* call.png */,
+				3FB2C57619A783B8003AD0A3 /* email.png */,
+				3FB2C57319A7833E003AD0A3 /* web.png */,
+				3FB2C57119A78275003AD0A3 /* Xcode.png */,
+				3F1317B519A4BD2C0019DD8B /* CamViewController.xib */,
+				3F1317B219A4BD1F0019DD8B /* CamViewController.h */,
+				3F1317B319A4BD1F0019DD8B /* CamViewController.m */,
+>>>>>>> FETCH_HEAD
 				3F19D14219A3FD9B00534179 /* SCShapeView.h */,
 				211636B5199E5C9D00C15DF7 /* DetailViewController.h */,
 				211636B6199E5C9D00C15DF7 /* DetailViewController.m */,
@@ -289,11 +339,19 @@
 				3FDF3FF519B8E056004D0B74 /* default_person.png in Resources */,
 				3FD0F7B519C5929C008E4DC4 /* Launch Screen.xib in Resources */,
 				651662741504516A009457EB /* InfoPlist.strings in Resources */,
+<<<<<<< HEAD
 				3F77F2E01A1081EC001F4C51 /* ud1.png in Resources */,
+=======
+>>>>>>> FETCH_HEAD
 				3FA05F3019A7CE2300B2F780 /* Images.xcassets in Resources */,
 				3FA05F3519A7D13400B2F780 /* 40.png in Resources */,
 				21FF2B03199E4910006D7550 /* Main.storyboard in Resources */,
 				3FDF3FEF19B8D654004D0B74 /* qr.png in Resources */,
+<<<<<<< HEAD
+=======
+				211636BC199E5CE400C15DF7 /* Contacts.storyboard in Resources */,
+				3FB2C57819A783B8003AD0A3 /* email.png in Resources */,
+>>>>>>> FETCH_HEAD
 				3FD1D6EA19A8A96100701510 /* retina_wood.png in Resources */,
 				3FA05F3419A7D13400B2F780 /* 29.png in Resources */,
 				3FDF3FF119B8D9BC004D0B74 /* contact.png in Resources */,

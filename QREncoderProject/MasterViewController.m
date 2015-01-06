@@ -12,6 +12,8 @@
 
 #import "NewContactViewController.h"
 
+#import <Parse/Parse.h>
+
 @interface MasterViewController () {
     NSMutableArray *_objects;
     
@@ -109,7 +111,44 @@
     
     [super viewDidLoad];
     
+<<<<<<< HEAD
     NewContactViewController *cd = [[NewContactViewController alloc] init];
+=======
+    
+    //// check this..
+    
+    
+    NSUserDefaults *prefsCont = [NSUserDefaults standardUserDefaults];
+    
+    // getting an NSString
+    NSString *myContactNumber = [prefsCont stringForKey:@"MyContactNumber"];
+    
+    
+    //delete query after recieving the contact
+    
+    PFQuery *query1= [PFQuery queryWithClassName:@"ContactExchange"];
+    [query1 whereKey:@"contact_sendTo" equalTo:myContactNumber];
+    [query1 findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        
+        if(!error)
+        {
+            for (PFObject *object in objects) {
+                [object deleteInBackground];
+            }
+        }
+        else
+        {
+            NSLog(@"error while deleting is %@",[error userInfo]);
+        }
+    }];
+    
+    
+    ////
+    
+    
+    
+    ContactDetailViewController *cd = [[ContactDetailViewController alloc] init];
+>>>>>>> FETCH_HEAD
     [cd findContact];
     
     [[UIDevice currentDevice] setValue:
@@ -128,7 +167,22 @@
     self.searchResults = [NSMutableArray arrayWithCapacity:[self.contactArray count]];
     
     convertedContactArray = [contactArray copy];
+<<<<<<< HEAD
     convertedDesignationArray = [designationArray copy];
+=======
+   // NSLog(@"The converted contact array is %@",convertedContactArray);
+    
+    
+    myTableView.backgroundView =
+    [[UIImageView alloc]initWithImage:
+     [[UIImage imageNamed:@"retina_wood.png"] stretchableImageWithLeftCapWidth:0.0
+                                                                 topCapHeight:5.0]];
+    self.myTableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"retina_wood.png"]];
+    
+       
+
+    
+>>>>>>> FETCH_HEAD
 }
 
 - (void)didReceiveMemoryWarning
